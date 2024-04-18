@@ -67,7 +67,7 @@ input:-webkit-autofill:active  {
     /* justify-content: end; */
     text-align: right;
     flex-wrap: wrap;
-    gap: 0 5px;
+    gap: 5px 5px;
 }
 
 .f * {
@@ -99,6 +99,10 @@ input:-webkit-autofill:active  {
     flex-wrap: wrap;
     justify-content: end;
     gap: 5px;
+}
+
+#kq {
+    margin: -5px 0 1em;
 }
 
 
