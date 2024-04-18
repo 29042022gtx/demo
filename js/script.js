@@ -6,7 +6,7 @@ var tiep=false
 for (var i=0; i<log.children.length; i++)
     log.children[i].style.visibility="hidden"
 n.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+    if (e.code === "Enter" || e.key === "Enter") {  //checks whether the pressed key is "Enter"
         xuLi();
         reload();
     }
