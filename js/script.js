@@ -55,6 +55,10 @@ async function reset() {
 async function clear() {
     await sleep(100)
     var i=log.children.length-1
+    while (n.value.length>0) {
+        n.value=""
+        await sleep(300)
+    }
     for (i; i>=0; i--) {
         if (!(log.children[i-1].innerHTML==="&nbsp;"))
             await sleep(250)
@@ -76,10 +80,12 @@ async function random() {
         await sleep(300)
     }
     await sleep(600)
-    document.getElementById("ok").classList.toggle("active")
-    xuLi()
-    await sleep(200)
-    document.getElementById("ok").classList.toggle("active")
+    if (tiep) {
+        okbtn.classList.add("active")
+        okbtn.click()
+        await sleep(200)
+        okbtn.classList.remove("active")
+    }
 }
 
 function sleep(ms) {
