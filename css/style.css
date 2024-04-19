@@ -16,10 +16,11 @@
     --lblue1: rgb(0, 38, 70);
     --dblue2: rgb(0, 94, 171);
     --lblue2: rgb(27, 152, 255);
-    --dgreen1: rgb(0, 29, 9);
-    --lgreen1: rgb(6, 59, 23);
-    --dgreen2: #02c061;
-    --lgreen2: #08b66d;
+    --dgreen1: #001f0a;
+    --lgreen1: #063b17;
+    --dgreen2: hsl(148, 86%, 34%);
+    --lgreen2: hsl(148, 88%, 42%);
+    --lgreen3: hsl(156, 55%, 77%);
     --dred1: rgb(40, 0, 0);
     --lred1: rgb(80, 0, 0);
     --dred2: rgb(146, 6, 6);
@@ -29,7 +30,7 @@
 
 * {
     box-sizing: border-box;
-    transition: all ease-in .8s;
+    transition: all ease-in .4s;
 }
 
 html {
@@ -108,7 +109,7 @@ input:-webkit-autofill:active  {
 #ok, #reset, #auto {
     /* border: 1px solid #666;
     box-shadow: 0 4px #666; */
-    transition: all ease-in .4s;
+    transition: all .4s ease-in;
 }
 
 #ok {
@@ -127,7 +128,7 @@ input:-webkit-autofill:active  {
     border-color: var(--dblue2);
     box-shadow: 0 0;
     transform: translateY(2px);
-    transition: all ease-in 0s;
+    transition: none;
 }
 
 #reset {
@@ -137,19 +138,29 @@ input:-webkit-autofill:active  {
 }
 
 #reset:hover {
-    border-color: var(--dgreen2);
-    box-shadow: 0 4px var(--dgreen2);
+    border-color: var(--lgreen2);
+    box-shadow: 0 4px var(--lgreen2);
 }
 
 #reset:active, #reset.active {
-    background-color: var(--dgreen2);
-    border-color: var(--lgreen2);
-    box-shadow: 0 0;
+    background-color: var(--lgreen2);
+    border-color: var(--lgreen3);
+    box-shadow: 0 4px var(--lgreen3);
 }
 
 #reset:active {
+    box-shadow: 0 0;
     transform: translateY(2px);
-    transition: all ease-in 0s;
+    transition: all 0s;
+}
+
+#reset.active:hover {
+    border-color: var(--lgreen1);
+    box-shadow: 0 4px var(--lgreen1);
+}
+
+#reset.active:active {
+    box-shadow: 0 0;
 }
 
 #auto {
@@ -165,18 +176,19 @@ input:-webkit-autofill:active  {
 
 #auto:active, #auto.active {
     background-color: var(--lred2);
-    border-color: var(--dred2);
-    box-shadow: 0 0;
+    border-color: var(--lred3);
+    box-shadow: 0 4px var(--lred3);
 }
 
 #auto:active {
+    box-shadow: 0 0;
     transform: translateY(2px);
-    transition: all ease-in 0s;
+    transition: all 0s;
 }
 
 #auto.active:hover {
-    border-color: var(--lred3);
-    box-shadow: 0 4px var(--lred3);
+    border-color: var(--lred1);
+    box-shadow: 0 4px var(--lred1);
 }
 
 #auto.active:active {

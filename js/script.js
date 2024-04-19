@@ -53,11 +53,11 @@ async function reset() {
 }
 
 async function clear() {
-    await sleep(100)
     var i=log.children.length-1
+    await sleep(301)
     while (n.value.length>0) {
         n.value=""
-        await sleep(300)
+        await sleep(301)
     }
     for (i; i>=0; i--) {
         if (!(log.children[i-1].innerHTML==="&nbsp;"))
