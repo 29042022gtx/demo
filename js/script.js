@@ -70,6 +70,7 @@ async function clear() {
 async function random() {
     let val=parseInt(Math.random() * 101)
     kq.innerHTML="..."
+    await sleep(300)
     while (n.value.length>0) {
         n.value=n.value.slice(0, n.value.length-1)
         await sleep(300)
