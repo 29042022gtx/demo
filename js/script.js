@@ -1,47 +1,85 @@
 const n = document.getElementById("n")
 const kq = document.getElementById("kq")
 const log = document.getElementById("log")
-const dung = document.getElementById("auto")
-var tiep=false
-for (var i=0; i<log.children.length; i++)
-    log.children[i].style.visibility="hidden"
+const okbtn = document.getElementById("ok")
+const resetbtn = document.getElementById("reset")
+const autobtn = document.getElementById("auto")
+let tiep=false, processing=false
 n.addEventListener("keydown", function (e) {
     if (e.code === "Enter" || e.key === "Enter") {  //checks whether the pressed key is "Enter"
         xuLi();
         reload();
     }
 });
+// auto()
 run()
 
-
-function reset() {
-    for (var i=0; i<log.children.length; i++)
-    log.children[i].style.visibility="hidden"
-}
-
-function dt() {
-    tiep=!tiep
-    dung.classList.toggle("active")
-}
-
 async function run() {
-    if (tiep)
-        await random()
-    await sleep(1200)
-    run()
+    while (true) {
+        if (tiep) {
+            await random()
+            await sleep(1200)
+        }
+        await sleep(50)
+    }
+}
+
+function enable(){
+    okbtn.removeAttribute("disabled")
+    resetbtn.removeAttribute("disabled")
+    autobtn.removeAttribute("disabled")
+}
+
+function disable() {
+    okbtn.setAttribute("disabled", "")
+    resetbtn.setAttribute("disabled", "")
+    autobtn.setAttribute("disabled", "")
+}
+
+async function auto() {
+    autobtn.classList.toggle("active")
+    tiep=!tiep
+}
+
+async function reset() {
+    resetbtn.classList.toggle("active")
+    tiep=false
+    disable()
+    autobtn.classList.remove("active")
+    reload()
+    await clear()
+    resetbtn.classList.toggle("active")
+    enable()
+}
+
+async function clear() {
+    await sleep(100)
+    var i=log.children.length-1
+    for (i; i>=0; i--) {
+        if (!(log.children[i-1].innerHTML==="&nbsp;"))
+            await sleep(250)
+        log.children[--i].innerHTML="&nbsp"
+        log.children[--i].innerHTML="&nbsp"
+    }
 }
 
 async function random() {
     let val=parseInt(Math.random() * 101)
-    n.value = val
-    // await sleep(250)
-    kq.innerHTML="...&nbsp"
+    kq.innerHTML="..."
+    while (n.value.length>0) {
+        n.value=n.value.slice(0, n.value.length-1)
+        await sleep(300)
+    }
+    var s=""+val
+    for (var i=0; i<s.length; i++) {
+        n.value+=s.at(i)
+        await sleep(300)
+    }
     await sleep(600)
     document.getElementById("ok").classList.toggle("active")
-    document.getElementById("ok").click()
+    xuLi()
     await sleep(200)
     document.getElementById("ok").classList.toggle("active")
-    return true
 }
 
 function sleep(ms) {
@@ -82,18 +120,6 @@ function xuLi() {
         result[0].innerHTML = "no"
     }
     return true
-}
-
-function chay() {
-    var n=parseFloat(prompt("Nhap n:"))
-    while (isNaN(n))
-        n=parseInt(prompt("Nhap lai:"))
-    var tiep
-    if (nguyenTo(n))
-        tiep=confirm("n la so nguyen to! \nTiep tuc?")
-    else
-        tiep=confirm("n khong phai so nguyen to! \nTiep tuc?")
-    return tiep
 }
 
 function nguyenTo(n) {
