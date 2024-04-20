@@ -4,7 +4,7 @@ const log = document.getElementById("log")
 const okbtn = document.getElementById("ok")
 const resetbtn = document.getElementById("reset")
 const autobtn = document.getElementById("auto")
-let tiep=false, processing=false
+let tiep=false, stop=false, processing=false
 n.addEventListener("keydown", function (e) {
     if (e.code === "Enter" || e.key === "Enter") {  //checks whether the pressed key is "Enter"
         xuLi();
@@ -14,14 +14,68 @@ n.addEventListener("keydown", function (e) {
 // auto()
 run()
 
+
 async function run() {
     while (true) {
         if (tiep) {
             await random()
-            await sleep(1200)
+            await wait(1200)
         }
-        await sleep(50)
+        await freeze(50)
     }
+}
+
+async function reset() {
+    resetbtn.classList.toggle("active")
+    disable()
+    tiep=false
+    autobtn.classList.remove("active")
+    stop=true
+    await freeze(601)
+    stop=false
+    await clear()
+    resetbtn.classList.toggle("active")
+    enable()
+}
+
+async function clear() {
+    var i=log.children.length-1
+    // await wait(100)
+    kq.innerHTML="..."
+    while (n.value.length>0) {
+        n.value=n.value.slice(0, n.value.length-1)
+        await wait(300)
+    }
+    for (i; i>=0; i--) {
+        if (!(log.children[i-1].innerHTML==="&nbsp;"))
+            await wait(250)
+        log.children[--i].innerHTML="&nbsp"
+        log.children[--i].innerHTML="&nbsp"
+    }
+}
+
+async function random() {
+    let val=parseInt(Math.random() * 1001)
+    kq.innerHTML="..."
+    await wait(200)
+    while (n.value.length>0) {
+        if (stop)
+            return
+        n.value=n.value.slice(0, n.value.length-1)
+        await wait(300)
+    }
+    var s=""+val
+    for (var i=0; i<s.length; i++) {
+        if (stop)
+            return
+        n.value+=s.at(i)
+        await wait(300)
+    }
+    await wait(600)
+    okbtn.classList.add("active")
+    okbtn.click()
+    await wait(200)
+    okbtn.classList.remove("active")
 }
 
 function enable(){
@@ -41,55 +95,13 @@ async function auto() {
     tiep=!tiep
 }
 
-async function reset() {
-    resetbtn.classList.toggle("active")
-    tiep=false
-    disable()
-    autobtn.classList.remove("active")
-    reload()
-    await clear()
-    resetbtn.classList.toggle("active")
-    enable()
+function freeze(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function clear() {
-    var i=log.children.length-1
-    await sleep(301)
-    while (n.value.length>0) {
-        n.value=""
-        await sleep(301)
-    }
-    for (i; i>=0; i--) {
-        if (!(log.children[i-1].innerHTML==="&nbsp;"))
-            await sleep(250)
-        log.children[--i].innerHTML="&nbsp"
-        log.children[--i].innerHTML="&nbsp"
-    }
-}
-
-async function random() {
-    let val=parseInt(Math.random() * 101)
-    kq.innerHTML="..."
-    await sleep(300)
-    while (n.value.length>0) {
-        n.value=n.value.slice(0, n.value.length-1)
-        await sleep(300)
-    }
-    var s=""+val
-    for (var i=0; i<s.length; i++) {
-        n.value+=s.at(i)
-        await sleep(300)
-    }
-    await sleep(600)
-    if (tiep) {
-        okbtn.classList.add("active")
-        okbtn.click()
-        await sleep(200)
-        okbtn.classList.remove("active")
-    }
-}
-
-function sleep(ms) {
+function wait(ms) {
+    if (stop)
+        return;
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
