@@ -4,7 +4,7 @@ const log = document.getElementById("log")
 const okbtn = document.getElementById("ok")
 const resetbtn = document.getElementById("reset")
 const autobtn = document.getElementById("auto")
-let tiep=false, stop=false, processing=false
+let tiep=false, stop=false
 n.addEventListener("keydown", function (e) {
     if (e.code === "Enter" || e.key === "Enter") {  //checks whether the pressed key is "Enter"
         xuLi();
@@ -27,6 +27,7 @@ async function run() {
 
 async function reset() {
     resetbtn.classList.toggle("active")
+    n.removeAttribute("onchange")
     disable()
     tiep=false
     autobtn.classList.remove("active")
@@ -34,6 +35,7 @@ async function reset() {
     await freeze(601)
     stop=false
     await clear()
+    n.setAttribute("onchange", "xuLi()")
     resetbtn.classList.toggle("active")
     enable()
 }
@@ -52,10 +54,11 @@ async function clear() {
         log.children[--i].innerHTML="&nbsp"
         log.children[--i].innerHTML="&nbsp"
     }
+    kq.innerHTML="Hay nhap so!"
 }
 
 async function random() {
-    let val=parseInt(Math.random() * 1001)
+    let val=parseInt(Math.random() * 101)
     kq.innerHTML="..."
     await wait(200)
     while (n.value.length>0) {
