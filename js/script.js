@@ -103,8 +103,6 @@ function freeze(ms) {
 }
 
 function wait(ms) {
-    if (stop)
-        return;
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
