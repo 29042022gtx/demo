@@ -93,7 +93,7 @@ function disable() {
     autobtn.setAttribute("disabled", "")
 }
 
-async function auto() {
+function auto() {
     autobtn.classList.toggle("active")
     tiep=!tiep
 }
